@@ -5,13 +5,14 @@ class Book extends Component {
   static propTypes = {
     thumbnail: PropTypes.string,
     title: PropTypes.string,
-    author: PropTypes.string,
+    author: PropTypes.array,
   };
 
   render() {
     const title = this.props.title ? this.props.title : 'Missing Title';
     const thumbnail = this.props.thumbnail ? this.props.thumbnail : undefined;
-    const author = this.props.author ? this.props.author : 'Missing Author';
+    const authors = this.props.author ? this.props.author : ['Missing Author'];
+    const author = authors.join('<br/>');
 
     return (
       <div className='book'>

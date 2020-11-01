@@ -16,9 +16,9 @@ class List extends Component {
         </div>
         <div className='list-books-content'>
           <div>
-            <Shelf books={this.props.books} shelf={ShelfType.READING} />
-            <Shelf books={this.props.books} shelf={ShelfType.WANT_TO_READ} />
-            <Shelf books={this.props.books} shelf={ShelfType.READ} />
+            <Shelf books={this.props.books} shelfType={ShelfType.READING} />
+            <Shelf books={this.props.books} shelfType={ShelfType.WANT_TO_READ} />
+            <Shelf books={this.props.books} shelfType={ShelfType.READ} />
           </div>
         </div>
         <div className='open-search'>

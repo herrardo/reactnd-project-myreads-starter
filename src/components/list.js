@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { ShelfType } from '../constants';
+import { ShelfType } from '../utils';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import Shelf from './shelf';
@@ -7,6 +7,7 @@ import Shelf from './shelf';
 class List extends Component {
   static propTypes = {
     books: PropTypes.array.isRequired,
+    onBookChange: PropTypes.func.isRequired,
   };
   render() {
     return (
@@ -16,9 +17,14 @@ class List extends Component {
         </div>
         <div className='list-books-content'>
           <div>
-            <Shelf books={this.props.books} shelfType={ShelfType.READING} />
-            <Shelf books={this.props.books} shelfType={ShelfType.WANT_TO_READ} />
-            <Shelf books={this.props.books} shelfType={ShelfType.READ} />
+            {Object.entries(ShelfType).map(([key, value]) => (
+              <Shelf
+                key={key}
+                books={this.props.books}
+                shelfType={value}
+                onBookChange={this.props.onBookChange}
+              />
+            ))}
           </div>
         </div>
         <div className='open-search'>

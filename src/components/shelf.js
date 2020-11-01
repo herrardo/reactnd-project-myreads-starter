@@ -9,6 +9,7 @@ class Shelf extends Component {
       shelf: PropTypes.string.isRequired,
       title: PropTypes.string.isRequired,
     }).isRequired,
+    onBookChange: PropTypes.func.isRequired,
   };
   render() {
     const {
@@ -25,7 +26,7 @@ class Shelf extends Component {
               .map(book => {
                 return (
                   <li key={book.id}>
-                    <Book book={book} />
+                    <Book book={book} onBookChange={this.props.onBookChange} />
                   </li>
                 );
               })}

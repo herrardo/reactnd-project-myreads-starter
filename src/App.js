@@ -18,12 +18,26 @@ class BooksApp extends React.Component {
     });
   }
 
+  onBookChange = ({ book, shelf }) => {
+    BooksAPI.update(book, shelf).then(() => {
+      let newBooks = [...this.state.books];
+      const bookIndex = this.state.books.findIndex(eachBook => eachBook.id === book.id);
+      let newBook = { ...newBooks[bookIndex] };
+      newBook.shelf = shelf;
+      newBooks[bookIndex] = newBook;
+      this.setState({ books: newBooks });
+    });
+  };
+
   render() {
-    console.log('App', this.state.books);
     return (
       <div className='app'>
-        <Route exact path={'/search'} render={() => <Search />}></Route>
-        <Route exact path={'/'} render={() => <List books={this.state.books} />}></Route>
+        <Route exact path={'/search'} render={() => <Search onBookChange={this.onBookChange} />} />
+        <Route
+          exact
+          path={'/'}
+          render={() => <List books={this.state.books} onBookChange={this.onBookChange} />}
+        />
       </div>
     );
   }

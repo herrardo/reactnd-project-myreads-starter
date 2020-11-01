@@ -1,9 +1,23 @@
+import * as BooksAPI from '../BooksAPI';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 
 class Book extends Component {
   static propTypes = {
     book: PropTypes.object.isRequired,
+    onBookChange: PropTypes.func.isRequired,
+  };
+  state = {
+    shelf: this.props.book.shelf,
+  };
+
+  handleSelectChange = event => {
+    event.preventDefault();
+    const shelf = event.target.value;
+    this.setState({
+      shelf,
+    });
+    this.props.onBookChange({ book: this.props.book, shelf });
   };
 
   render() {
@@ -25,7 +39,7 @@ class Book extends Component {
               ...(thumbnail && { backgroundImage: `url("${thumbnail}"` }),
             }}></div>
           <div className='book-shelf-changer'>
-            <select>
+            <select onChange={this.handleSelectChange} value={this.state.shelf}>
               <option value='move' disabled>
                 Move to...
               </option>

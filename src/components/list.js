@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
-import Shelf from './shelf';
 import { ShelfType } from '../constants';
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
+import Shelf from './shelf';
 
 class List extends Component {
   static propTypes = {

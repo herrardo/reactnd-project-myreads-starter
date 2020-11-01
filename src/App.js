@@ -1,14 +1,15 @@
-import React from 'react';
-import * as BooksAPI from './BooksAPI';
 import './App.css';
+import * as BooksAPI from './BooksAPI';
 import { Route } from 'react-router-dom';
-import Search from './components/search';
 import List from './components/list';
+import React from 'react';
+import Search from './components/search';
 
 class BooksApp extends React.Component {
   state = {
     books: [],
   };
+
   componentDidMount() {
     BooksAPI.getAll().then(response => {
       this.setState({
@@ -16,6 +17,7 @@ class BooksApp extends React.Component {
       });
     });
   }
+
   render() {
     console.log('App', this.state.books);
     return (

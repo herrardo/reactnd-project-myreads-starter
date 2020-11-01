@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
 import Book from './book';
 import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 
 class Shelf extends Component {
   static propTypes = {
@@ -13,7 +13,7 @@ class Shelf extends Component {
   render() {
     const {
       books,
-      shelfType: { shelf: shelf, title: title },
+      shelfType: { shelf, title },
     } = this.props;
     return (
       <div className='bookshelf'>

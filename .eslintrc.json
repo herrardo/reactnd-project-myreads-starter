@@ -17,7 +17,7 @@
     "ecmaVersion": 12,
     "sourceType": "module"
   },
-  "plugins": ["react", "prettier", "jest"],
+  "plugins": ["react", "prettier", "jest", "sort-imports-es6-autofix"],
   "rules": {
     "react/jsx-key": "error",
     "react/no-unescaped-entities": 0,
@@ -44,7 +44,20 @@
     "no-unused-vars": "off",
     "require-atomic-updates": "error",
     "require-await": "error",
-    "strict": ["error", "global"]
+    "strict": ["error", "global"],
+    "sort-imports-es6-autofix/sort-imports-es6": [
+      2,
+      {
+        "ignoreCase": false,
+        "ignoreMemberSort": false,
+        "memberSyntaxSortOrder": ["none", "all", "multiple", "single"]
+      }
+    ]
   },
-  "root": true
+  "root": true,
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  }
 }

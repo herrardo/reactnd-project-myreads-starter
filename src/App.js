@@ -6,15 +6,22 @@ import Search from './components/search';
 import List from './components/list';
 
 class BooksApp extends React.Component {
-  state = {};
+  state = {
+    books: [],
+  };
   componentDidMount() {
-    BooksAPI.getAll().then(response => console.log(response));
+    BooksAPI.getAll().then(response => {
+      this.setState({
+        books: response,
+      });
+    });
   }
   render() {
+    console.log('App', this.state.books);
     return (
       <div className='app'>
         <Route exact path={'/search'} render={() => <Search />}></Route>
-        <Route exact path={'/'} render={() => <List />}></Route>
+        <Route exact path={'/'} render={() => <List books={this.state.books} />}></Route>
       </div>
     );
   }

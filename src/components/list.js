@@ -1,8 +1,13 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import Book from './book';
+import PropTypes from 'prop-types';
+import Shelf from './shelf';
+import { ShelfType } from '../constants';
 
 class List extends Component {
+  static propTypes = {
+    books: PropTypes.array.isRequired,
+  };
   render() {
     return (
       <div className='list-books'>
@@ -11,46 +16,9 @@ class List extends Component {
         </div>
         <div className='list-books-content'>
           <div>
-            <div className='bookshelf'>
-              <h2 className='bookshelf-title'>Currently Reading</h2>
-              <div className='bookshelf-books'>
-                <ol className='books-grid'>
-                  <li></li>
-                  <li>
-                    <Book />
-                  </li>
-                </ol>
-              </div>
-            </div>
-            <div className='bookshelf'>
-              <h2 className='bookshelf-title'>Want to Read</h2>
-              <div className='bookshelf-books'>
-                <ol className='books-grid'>
-                  <li>
-                    <Book />
-                  </li>
-                  <li>
-                    <Book />
-                  </li>
-                </ol>
-              </div>
-            </div>
-            <div className='bookshelf'>
-              <h2 className='bookshelf-title'>Read</h2>
-              <div className='bookshelf-books'>
-                <ol className='books-grid'>
-                  <li>
-                    <Book />
-                  </li>
-                  <li>
-                    <Book />
-                  </li>
-                  <li>
-                    <Book />
-                  </li>
-                </ol>
-              </div>
-            </div>
+            <Shelf books={this.props.books} shelf={ShelfType.READING} />
+            <Shelf books={this.props.books} shelf={ShelfType.WANT_TO_READ} />
+            <Shelf books={this.props.books} shelf={ShelfType.READ} />
           </div>
         </div>
         <div className='open-search'>

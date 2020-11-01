@@ -22,20 +22,17 @@ class Shelf extends Component {
           <ol className='books-grid'>
             {books
               .filter(book => book.shelf === shelf)
-              .map(book => (
-                <li key={book.id}>
-                  <Book
-                    thumbnail={book.imageLinks.smallThumbnail}
-                    authors={book.authors}
-                    title={book.title}
-                  />
-                </li>
-              ))}
+              .map(book => {
+                return (
+                  <li key={book.id}>
+                    <Book book={book} />
+                  </li>
+                );
+              })}
           </ol>
         </div>
       </div>
     );
   }
 }
-
 export default Shelf;

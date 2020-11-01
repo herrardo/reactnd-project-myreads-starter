@@ -3,16 +3,16 @@ import PropTypes from 'prop-types';
 
 class Book extends Component {
   static propTypes = {
-    thumbnail: PropTypes.string,
-    title: PropTypes.string,
-    author: PropTypes.array,
+    book: PropTypes.object.isRequired,
   };
 
   render() {
-    const title = this.props.title ? this.props.title : 'Missing Title';
-    const thumbnail = this.props.thumbnail ? this.props.thumbnail : undefined;
-    const authors = this.props.author ? this.props.author : ['Missing Author'];
-    const author = authors.join('<br/>');
+    const title = this.props.book.title ? this.props.book.title : 'Missing Title';
+    const thumbnail =
+      this.props.book.imageLinks && this.props.book.imageLinks.smallThumbnail
+        ? this.props.book.imageLinks.smallThumbnail
+        : undefined;
+    const authors = this.props.book.authors ? this.props.book.authors : 'Missing Author';
 
     return (
       <div className='book'>
@@ -37,7 +37,7 @@ class Book extends Component {
           </div>
         </div>
         <div className='book-title'>{title}</div>
-        <div className='book-authors'>{author}</div>
+        <div className='book-authors'>{authors}</div>
       </div>
     );
   }

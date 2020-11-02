@@ -60,7 +60,9 @@ class Search extends Component {
             (query === '' ? (
               <p></p>
             ) : (
-              <p>Sorry, we couldn't find any items with your current query.</p>
+              <p className='search-books-error'>
+                Sorry, we couldn't find any items for your current query.
+              </p>
             ))}
         </div>
       </div>

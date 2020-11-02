@@ -24,7 +24,7 @@ class Search extends Component {
     this.onSearch(query);
   };
 
-  onSearch = debounce(this.props.onSearch, 400);
+  onSearch = debounce(this.props.onSearch, 200);
 
   render() {
     const { query } = this.state;

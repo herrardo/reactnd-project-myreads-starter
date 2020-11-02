@@ -1,4 +1,3 @@
-import * as BooksAPI from '../BooksAPI';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 
@@ -8,7 +7,7 @@ class Book extends Component {
     onBookChange: PropTypes.func.isRequired,
   };
   state = {
-    shelf: this.props.book.shelf,
+    shelf: this.props.book.shelf ? this.props.book.shelf : 'none',
   };
 
   handleSelectChange = event => {
@@ -27,7 +26,6 @@ class Book extends Component {
         ? this.props.book.imageLinks.smallThumbnail
         : undefined;
     const authors = this.props.book.authors ? this.props.book.authors : 'Missing Author';
-
     return (
       <div className='book'>
         <div className='book-top'>

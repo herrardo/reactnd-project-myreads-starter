@@ -8,31 +8,72 @@ import Search from './components/search';
 class BooksApp extends React.Component {
   state = {
     books: [],
+    searchedBooks: [],
+    searchError: false,
   };
 
   componentDidMount() {
+    this.loadBooks();
+  }
+
+  loadBooks = () => {
     BooksAPI.getAll().then(response => {
       this.setState({
         books: response,
       });
     });
-  }
+  };
 
   onBookChange = ({ book, shelf }) => {
     BooksAPI.update(book, shelf).then(() => {
-      let newBooks = [...this.state.books];
-      const bookIndex = this.state.books.findIndex(eachBook => eachBook.id === book.id);
-      let newBook = { ...newBooks[bookIndex] };
-      newBook.shelf = shelf;
-      newBooks[bookIndex] = newBook;
-      this.setState({ books: newBooks });
+      this.loadBooks();
     });
+  };
+
+  onSearch = query => {
+    BooksAPI.search(query)
+      .then(searchedBooks => {
+        if (searchedBooks.error) {
+          this.setSearchError();
+        } else {
+          this.updateSearchedBooksShelves(searchedBooks);
+        }
+      })
+      .catch(error => {
+        this.setSearchError();
+      });
+  };
+  setSearchError = () => {
+    this.setState({
+      searchError: true,
+      searchedBooks: [],
+    });
+  };
+  updateSearchedBooksShelves = searchedBooks => {
+    searchedBooks.forEach(searchedBook => {
+      const bookIndex = this.state.books.findIndex(eachBook => eachBook.id === searchedBook.id);
+      if (bookIndex !== -1) {
+        searchedBook.shelf = this.state.books[bookIndex].shelf;
+      }
+    });
+    this.setState({ searchedBooks, searchError: false });
   };
 
   render() {
     return (
       <div className='app'>
-        <Route exact path={'/search'} render={() => <Search onBookChange={this.onBookChange} />} />
+        <Route
+          exact
+          path={'/search'}
+          render={() => (
+            <Search
+              onBookChange={this.onBookChange}
+              onSearch={this.onSearch}
+              books={this.state.searchedBooks}
+              searchError={this.state.searchError}
+            />
+          )}
+        />
         <Route
           exact
           path={'/'}

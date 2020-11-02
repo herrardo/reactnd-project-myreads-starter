@@ -1,8 +1,30 @@
+import * as BooksAPI from '../BooksAPI';
 import { Link } from 'react-router-dom';
+import Book from './book';
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 
 class Search extends Component {
+  static propTypes = {
+    onBookChange: PropTypes.func.isRequired,
+    books: PropTypes.array.isRequired,
+    searchError: PropTypes.bool,
+    onSearch: PropTypes.func.isRequired,
+  };
+  state = {
+    query: '',
+  };
+  handleInput = event => {
+    const query = event.target.value;
+    this.setState({
+      query,
+    });
+    this.props.onSearch(query);
+  };
+
   render() {
+    const { query } = this.state;
+    const { books } = this.props;
     return (
       <div className='search-books'>
         <div className='search-books-bar'>
@@ -10,19 +32,32 @@ class Search extends Component {
             Close
           </Link>
           <div className='search-books-input-wrapper'>
-            {/*
-                  NOTES: The search from BooksAPI is limited to a particular set of search terms.
-                  You can find these search terms here:
-                  https://github.com/udacity/reactnd-project-myreads-starter/blob/master/SEARCH_TERMS.md
-
-                  However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
-                  you don't find a specific author or title. Every search is limited by search terms.
-                */}
-            <input type='text' placeholder='Search by title or author' />
+            <input
+              type='text'
+              placeholder='Search by title or author'
+              value={query}
+              onInput={this.handleInput}
+            />
           </div>
         </div>
         <div className='search-books-results'>
-          <ol className='books-grid'></ol>
+          {!this.props.searchError && (
+            <ol className='books-grid'>
+              {books.map(book => {
+                return (
+                  <li key={book.id}>
+                    <Book book={book} onBookChange={this.props.onBookChange} />
+                  </li>
+                );
+              })}
+            </ol>
+          )}
+          {this.props.searchError &&
+            (this.state.query === '' ? (
+              <p></p>
+            ) : (
+              <p>Sorry, we couldn't find any items with your current query.</p>
+            ))}
         </div>
       </div>
     );

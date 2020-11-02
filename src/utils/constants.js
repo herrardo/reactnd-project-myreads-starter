@@ -11,4 +11,8 @@ export const ShelfType = {
     shelf: 'read',
     title: 'Read',
   },
+  NONE: {
+    shelf: 'none',
+    title: '',
+  },
 };

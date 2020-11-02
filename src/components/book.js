@@ -6,8 +6,9 @@ class Book extends Component {
     book: PropTypes.object.isRequired,
     onBookChange: PropTypes.func.isRequired,
   };
+
   state = {
-    shelf: this.props.book.shelf ? this.props.book.shelf : 'none',
+    shelf: this.props.book.shelf,
   };
 
   handleSelectChange = event => {
@@ -26,6 +27,7 @@ class Book extends Component {
         ? this.props.book.imageLinks.smallThumbnail
         : undefined;
     const authors = this.props.book.authors ? this.props.book.authors : 'Missing Author';
+
     return (
       <div className='book'>
         <div className='book-top'>

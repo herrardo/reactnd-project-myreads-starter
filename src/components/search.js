@@ -1,5 +1,5 @@
-import * as BooksAPI from '../BooksAPI';
 import { Link } from 'react-router-dom';
+import { debounce } from '../utils';
 import Book from './book';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
@@ -11,20 +11,24 @@ class Search extends Component {
     searchError: PropTypes.bool,
     onSearch: PropTypes.func.isRequired,
   };
+
   state = {
     query: '',
   };
+
   handleInput = event => {
     const query = event.target.value;
-    this.setState({
+    this.setState(() => ({
       query,
-    });
-    this.props.onSearch(query);
+    }));
+    this.onSearch(query);
   };
+
+  onSearch = debounce(this.props.onSearch, 400);
 
   render() {
     const { query } = this.state;
-    const { books } = this.props;
+    const { books, onBookChange, searchError } = this.props;
     return (
       <div className='search-books'>
         <div className='search-books-bar'>
@@ -36,24 +40,24 @@ class Search extends Component {
               type='text'
               placeholder='Search by title or author'
               value={query}
-              onInput={this.handleInput}
+              onChange={this.handleInput}
             />
           </div>
         </div>
         <div className='search-books-results'>
-          {!this.props.searchError && (
+          {!searchError && (
             <ol className='books-grid'>
               {books.map(book => {
                 return (
                   <li key={book.id}>
-                    <Book book={book} onBookChange={this.props.onBookChange} />
+                    <Book book={book} onBookChange={onBookChange} />
                   </li>
                 );
               })}
             </ol>
           )}
-          {this.props.searchError &&
-            (this.state.query === '' ? (
+          {searchError &&
+            (query === '' ? (
               <p></p>
             ) : (
               <p>Sorry, we couldn't find any items with your current query.</p>

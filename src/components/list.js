@@ -9,6 +9,7 @@ class List extends Component {
     books: PropTypes.array.isRequired,
     onBookChange: PropTypes.func.isRequired,
   };
+
   render() {
     return (
       <div className='list-books'>

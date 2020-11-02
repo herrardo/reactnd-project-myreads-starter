@@ -1,6 +1,7 @@
 import './App.css';
 import * as BooksAPI from './BooksAPI';
 import { Route } from 'react-router-dom';
+import { ShelfType } from './utils';
 import List from './components/list';
 import React from 'react';
 import Search from './components/search';
@@ -43,18 +44,19 @@ class BooksApp extends React.Component {
         this.setSearchError();
       });
   };
+
   setSearchError = () => {
     this.setState({
       searchError: true,
       searchedBooks: [],
     });
   };
+
   updateSearchedBooksShelves = searchedBooks => {
     searchedBooks.forEach(searchedBook => {
       const bookIndex = this.state.books.findIndex(eachBook => eachBook.id === searchedBook.id);
-      if (bookIndex !== -1) {
-        searchedBook.shelf = this.state.books[bookIndex].shelf;
-      }
+      searchedBook.shelf =
+        bookIndex !== -1 ? this.state.books[bookIndex].shelf : ShelfType.NONE.shelf;
     });
     this.setState({ searchedBooks, searchError: false });
   };
